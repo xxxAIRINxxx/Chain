@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "xxxAIRINxxx/Chain"
+  s.name         = "SwChain"
   s.version      = "1.0.0"
   s.summary      = "Method chaining of queued closure (blocks) on GCD (Grand Central Dispatch)"
   s.homepage     = "https://github.com/xxxAIRINxxx/Chain"
