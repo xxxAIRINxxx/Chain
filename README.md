@@ -4,7 +4,7 @@
 [![Platforms iOS](https://img.shields.io/badge/Platforms-iOS-lightgray.svg?style=flat)](https://developer.apple.com/swift/)
 [![Xcode 7.1+](https://img.shields.io/badge/Xcode-7.1+-blue.svg?style=flat)](https://developer.apple.com/swift/)
 
-Chaining of closure (blocks) in GCD (Grand Central Dispatch)
+Method chaining of queued closure (blocks) on GCD (Grand Central Dispatch).
 
 Chain is inspired by [Async](https://github.com/duemunk/Async).
 

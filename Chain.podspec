@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "Chain"
   s.version      = "1.0.0"
-  s.summary      = "Chaining of closure (blocks) in GCD (Grand Central Dispatch)"
+  s.summary      = "Method chaining of queued closure (blocks) on GCD (Grand Central Dispatch)"
   s.homepage     = "https://github.com/xxxAIRINxxx/Chain"
   s.license      = 'MIT'
   s.author       = { "Airin" => "xl1138@gmail.com" }
