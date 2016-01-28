@@ -19,7 +19,7 @@ Chain is inspired by [Async](https://github.com/duemunk/Async).
 
 ### Basics
 
-```
+```swift
 Chain.main {
     // called first
     // called at main thread queue
@@ -55,7 +55,7 @@ Chain.main {
 
 ### Custom queue
 
-```
+```swift
 let customQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
 
 Chain.custom(customQueue) {
@@ -90,7 +90,7 @@ Chain.custom(customQueue) {
 Chain is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-```
+```ruby
 use_frameworks!
 
 pod "SwChain"
@@ -100,7 +100,7 @@ pod "SwChain"
 
 To integrate Chain into your Xcode project using Carthage, specify it in your Cartfile:
 
-```
+```ruby
 github "xxxAIRINxxx/Chain"
 ```
 
