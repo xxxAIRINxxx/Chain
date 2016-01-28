@@ -93,7 +93,7 @@ it, simply add the following line to your Podfile:
 ```
 use_frameworks!
 
-pod "Chain"
+pod "SwChain"
 ```
 
 ### Carthage
