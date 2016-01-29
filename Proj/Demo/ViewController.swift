@@ -23,22 +23,22 @@ final class ViewController: UIViewController {
             return "1"
             }.background { result in
                 // called second
-                // called at background thread queue
+                // called at background qos class thread queue
                 print(result)  // Optional(1)
                 return "2"
             }.userInteractive { result in
                 // called third
-                // called at userInteractive thread queue
+                // called at userInteractive qos class thread queue
                 print(result)  // Optional(2)
                 return "3"
             }.userInitiated { result in
                 // called fourth
-                // called at userInitiated thread queue
+                // called at userInitiated qos class thread queue
                 print(result)  // Optional(3)
                 return "4"
             }.onDefault { result in
                 // called fifth
-                // called at default thread queue
+                // called at default qos class thread queue
                 print(result)  // Optional(4)
                 return "5"
             }.run(.Main) { result in
@@ -58,7 +58,7 @@ final class ViewController: UIViewController {
             return nil
             }.onDefault { result in
                 // called second
-                // called default thread queue
+                // called default qos class thread queue
                 return result
             }.main { result in
                 // called third
