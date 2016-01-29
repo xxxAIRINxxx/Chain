@@ -32,7 +32,7 @@ public enum Queue {
         case .Utility:
             return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
         case .Default:
-            return NSThread.isMainThread() ? Queue.Main.get : Queue.Background.get
+            return dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)
         case .Custom(let queue):
             return queue
         }
