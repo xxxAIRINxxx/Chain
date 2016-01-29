@@ -81,6 +81,10 @@ extension Chain {
         return Chain(Queue.Utility, nil,  { _ in return block() })
     }
     
+    public static func onDefault(block: Void -> AnyObject?) -> Chain {
+        return Chain(Queue.Default, nil,  { _ in return block() })
+    }
+  
     public static func custom(queue: dispatch_queue_t, _ block: Void -> AnyObject?) -> Chain {
         return Chain(Queue.Custom(queue: queue), nil,  { _ in return block() })
     }
@@ -108,6 +112,10 @@ extension Chain {
     
     public func utility(block: Closure) -> Chain {
         return Chain(Queue.Utility, self, block)
+    }
+    
+    public func onDefault(block: Closure) -> Chain {
+        return Chain(Queue.Default, self, block)
     }
     
     public func custom(queue: dispatch_queue_t, _ block: Closure) -> Chain {
