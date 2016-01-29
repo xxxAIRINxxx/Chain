@@ -36,9 +36,9 @@ final class ViewController: UIViewController {
                 // called at userInitiated thread queue
                 print(result)  // Optional(3)
                 return "4"
-            }.on { result in
+            }.onDefault { result in
                 // called fifth
-                // called in the same thread queue as before
+                // called at default thread queue
                 print(result)  // Optional(4)
                 return "5"
             }.run(.Main) { result in
@@ -56,9 +56,9 @@ final class ViewController: UIViewController {
             // called first
             // called at customQueue
             return nil
-            }.on { result in
+            }.onDefault { result in
                 // called second
-                // called at customQueue
+                // called default thread queue
                 return result
             }.main { result in
                 // called third
