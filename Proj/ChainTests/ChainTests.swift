@@ -38,8 +38,8 @@ class ChainTests: XCTestCase {
             }.utility { result in
                 XCTAssertEqual(qos_class_self(), QOS_CLASS_UTILITY, "on utility queue")
                 return nil
-            }.on { result in
-                XCTAssertEqual(qos_class_self(), QOS_CLASS_UTILITY, "on utility queue")
+            }.onDefault { result in
+                XCTAssertEqual(qos_class_self(), QOS_CLASS_DEFAULT, "on default queue")
                 return nil
             }.run(.Main) { result in
                 XCTAssertEqual(qos_class_self(), qos_class_main(), "on main queue")
@@ -68,9 +68,6 @@ class ChainTests: XCTestCase {
         Chain.custom(customQueue) {
             XCTAssertEqual(qos_class_self(), qos_class, "")
             return nil
-            }.on { result in
-                XCTAssertEqual(qos_class_self(), qos_class, "")
-                return result
             }.main { result in
                 XCTAssertEqual(qos_class_self(), qos_class_main(), "")
                 return result
@@ -109,7 +106,7 @@ class ChainTests: XCTestCase {
                 let _result = result as! Int
                 XCTAssertTrue(_result == 4, "")
                 return _result + 1
-            }.on { result in
+            }.onDefault { result in
                 let _result = result as! Int
                 XCTAssertTrue(_result == 5, "")
                 return _result + 1
@@ -141,7 +138,7 @@ class ChainTests: XCTestCase {
             }.utility { result in
                 XCTAssertTrue(result! === obj, "")
                 return result!
-            }.on { result in
+            }.onDefault { result in
                 XCTAssertTrue(result! === obj, "")
                 return result!
             }.run(.Main) { result in
@@ -169,7 +166,7 @@ class ChainTests: XCTestCase {
             }.utility { result in
                 XCTAssertNil(result, "")
                 return result
-            }.on { result in
+            }.onDefault { result in
                 XCTAssertNil(result, "")
                 return result
             }.run(.Main) { result in

@@ -68,25 +68,12 @@ class QueueTests: XCTestCase {
         waitForExpectationsWithTimeout(0.5, handler: nil)
     }
     
-    func testDefaultMainQueue() {
-        XCTAssertTrue(Queue.Default.get === dispatch_get_main_queue(), "on default main queue")
-        
+    func testDefaultQueue() {
         let expectation = expectationWithDescription("")
+        
         dispatch_async(Queue.Default.get) {
-            XCTAssertEqual(qos_class_self(), qos_class_main(), "on default main queue")
+            XCTAssertEqual(qos_class_self(), QOS_CLASS_DEFAULT, "on default queue")
             expectation.fulfill()
-        }
-        waitForExpectationsWithTimeout(0.5, handler: nil)
-    }
-    
-    func testDefaultBackgroundQueue() {
-        let expectation = expectationWithDescription("")
-        
-        dispatch_async(Queue.Background.get) {
-            dispatch_async(Queue.Default.get) {
-                XCTAssertEqual(qos_class_self(), QOS_CLASS_BACKGROUND, "on default background queue")
-                expectation.fulfill()
-            }
         }
         
         waitForExpectationsWithTimeout(0.5, handler: nil)
