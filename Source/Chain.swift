@@ -61,10 +61,6 @@ extension Chain {
 
 extension Chain {
     
-    public static func on(queue: Queue? = nil, _ block: Void -> AnyObject?) -> Chain {
-        return Chain(queue ?? Queue.Default, nil,  { _ in return block() })
-    }
-    
     public static func main(block: Void -> AnyObject?) -> Chain {
         return Chain(Queue.Main, nil, { _ in return block() })
     }
@@ -93,10 +89,6 @@ extension Chain {
 // MARK: - Instance Functions
 
 extension Chain {
-    
-    public func on(queue: Queue? = nil, _ block: Closure) -> Chain {
-        return Chain(queue ?? self.queue, self, block)
-    }
     
     public func main(block: Closure) -> Chain {
         return Chain(Queue.Main, self, block)
