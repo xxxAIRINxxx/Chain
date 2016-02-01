@@ -26,7 +26,7 @@ public final class Chain {
     
     private func runChain(next: Closure) -> Closure? {
         let _block = self.block
-        let _queue = self.queue.get
+        let _queue = self.queue.queue
         
         guard let _previousChain = self.previousChain else {
             dispatch_async(_queue) { next(_block(nil)) }
@@ -49,7 +49,7 @@ public final class Chain {
 extension Chain {
     
     public func run(queue: Queue? = nil, _ completion: (AnyObject? -> Void)? = nil) {
-        let _queue = queue?.get ?? self.queue.get
+        let _queue = queue?.queue ?? self.queue.queue
         self.runChain { result in
             dispatch_async(_queue) { completion?(result) }
             return nil

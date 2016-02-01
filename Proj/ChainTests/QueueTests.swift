@@ -21,13 +21,13 @@ class QueueTests: XCTestCase {
     }
     
     func testMainQueue() {
-        XCTAssertTrue(Queue.Main.get === dispatch_get_main_queue(), "on main queue")
+        XCTAssertTrue(Queue.Main.queue === dispatch_get_main_queue(), "on main queue")
     }
     
     func testBackgroundQueue() {
         let expectation = expectationWithDescription("")
         
-        dispatch_async(Queue.Background.get) {
+        dispatch_async(Queue.Background.queue) {
             XCTAssertEqual(qos_class_self(), QOS_CLASS_BACKGROUND, "on background queue")
             expectation.fulfill()
         }
@@ -38,7 +38,7 @@ class QueueTests: XCTestCase {
     func testUserInteractiveQueue() {
         let expectation = expectationWithDescription("")
         
-        dispatch_async(Queue.UserInteractive.get) {
+        dispatch_async(Queue.UserInteractive.queue) {
             XCTAssertEqual(qos_class_self(), QOS_CLASS_USER_INTERACTIVE, "on user interactive queue")
             expectation.fulfill()
         }
@@ -49,7 +49,7 @@ class QueueTests: XCTestCase {
     func testUserInitiatedQueue() {
         let expectation = expectationWithDescription("")
         
-        dispatch_async(Queue.UserInitiated.get) {
+        dispatch_async(Queue.UserInitiated.queue) {
             XCTAssertEqual(qos_class_self(), QOS_CLASS_USER_INITIATED, "on user initiated queue")
             expectation.fulfill()
         }
@@ -60,7 +60,7 @@ class QueueTests: XCTestCase {
     func testUtilityQueue() {
         let expectation = expectationWithDescription("")
         
-        dispatch_async(Queue.Utility.get) {
+        dispatch_async(Queue.Utility.queue) {
             XCTAssertEqual(qos_class_self(), QOS_CLASS_UTILITY, "on utility queue")
             expectation.fulfill()
         }
@@ -71,7 +71,7 @@ class QueueTests: XCTestCase {
     func testDefaultQueue() {
         let expectation = expectationWithDescription("")
         
-        dispatch_async(Queue.Default.get) {
+        dispatch_async(Queue.Default.queue) {
             XCTAssertEqual(qos_class_self(), QOS_CLASS_DEFAULT, "on default queue")
             expectation.fulfill()
         }
@@ -83,11 +83,11 @@ class QueueTests: XCTestCase {
         let serialQueue = dispatch_queue_create("serial_queue", DISPATCH_QUEUE_SERIAL)
         let queue = Queue.Custom(queue: serialQueue)
         
-        XCTAssertTrue(queue.get === serialQueue, "on custom queue")
+        XCTAssertTrue(queue.queue === serialQueue, "on custom queue")
         
         let expectation = expectationWithDescription("")
-        dispatch_async(Queue.Background.get) {
-            XCTAssertTrue(queue.get === serialQueue, "on custom queue")
+        dispatch_async(Queue.Background.queue) {
+            XCTAssertTrue(queue.queue === serialQueue, "on custom queue")
             expectation.fulfill()
         }
         waitForExpectationsWithTimeout(0.5, handler: nil)

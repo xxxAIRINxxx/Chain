@@ -19,7 +19,7 @@ public enum Queue {
     case Default
     case Custom(queue: dispatch_queue_t)
     
-    public var get : dispatch_queue_t {
+    public var queue : dispatch_queue_t {
         switch self {
         case .Main:
             return dispatch_get_main_queue()
