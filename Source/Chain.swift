@@ -88,6 +88,30 @@ extension Chain {
     public static func custom(queue: dispatch_queue_t, _ block: Void -> AnyObject?) -> Chain {
         return Chain(Queue.Custom(queue: queue), nil,  { _ in return block() })
     }
+    
+    public static func after(queue: Queue = Queue.Background, seconds: Double, _ block:  Void -> AnyObject?) -> Chain {
+        return Chain(queue, nil) { _ in
+            Chain.waitBlock(seconds)()
+            return block()
+        }
+    }
+    
+    public static func wait(queue: Queue = Queue.Background, seconds: Double, _ block:  Void -> AnyObject?) -> Chain {
+        return Chain(queue, nil) { _ in
+            Chain.waitBlock(seconds)()
+            return nil
+        }
+    }
+    
+    private static func waitBlock(seconds: Double) -> (Void -> Void) {
+        return {
+            let nanoSeconds = Int64(seconds * Double(NSEC_PER_SEC))
+            let time = dispatch_time(DISPATCH_TIME_NOW, nanoSeconds)
+            
+            let sem = dispatch_semaphore_create(0)
+            dispatch_semaphore_wait(sem, time)
+        }
+    }
 }
 
 // MARK: - Instance Functions
@@ -120,5 +144,19 @@ extension Chain {
     
     public func custom(queue: dispatch_queue_t, _ block: Closure) -> Chain {
         return Chain(Queue.Custom(queue: queue), self, block)
+    }
+    
+    public func after(queue: Queue = Queue.Background, seconds: Double, _ block: Closure) -> Chain {
+        return Chain(queue, self) { result in
+            Chain.waitBlock(seconds)()
+            return block(result)
+        }
+    }
+    
+    public func wait(queue: Queue = Queue.Background, seconds: Double) -> Chain {
+        return Chain(queue, self) { result in
+            Chain.waitBlock(seconds)()
+            return result
+        }
     }
 }
