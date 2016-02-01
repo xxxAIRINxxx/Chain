@@ -28,13 +28,13 @@ public final class Chain {
         let _block = self.block
         let _queue = self.queue.queue
         
-        guard let _previousChain = self.previousChain else {
+        if let _previousChain = self.previousChain {
+            return _previousChain.runChain { result in
+                dispatch_async(_queue) { next(_block(result)) }
+                return nil
+            }
+        } else {
             dispatch_async(_queue) { next(_block(nil)) }
-            return nil
-        }
-        
-        return _previousChain.runChain { result in
-            dispatch_async(_queue) { next(_block(result)) }
             return nil
         }
     }
