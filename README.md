@@ -77,6 +77,62 @@ Chain.custom(customQueue) {
     }.run()
 ```
 
+### After
+
+```swift
+Chain.main {
+    // called first
+    // called at main thread queue
+    print("start after: \(NSDate().description)")
+    return "1"
+    }.after(seconds: 5) { result in
+        // called second
+        // called to 5 seconds after the previous block
+        // called at background qos class thread queue
+        print(result)  // Optional(1)
+        return "after 2: \(NSDate().description)"
+    }.userInteractive { result in
+        // called third
+        // called at userInteractive qos class thread queue
+        print(result)  // Optional(2)
+        return "after 3: \(NSDate().description)"
+    }.after(Queue.Utility, seconds: 5) { result in
+        // called fourth
+        // called to 5 seconds after the previous block
+        // called at utility qos class thread queue
+        print(result)  // Optional(3)
+        return "after 4: \(NSDate().description)"
+    }.run(.Main) { result in
+        // called last
+        // called at main thread queue
+        print(result)  // Optional(4)
+        print("after completion: \(NSDate().description)")
+}
+```
+
+### Wait
+
+```swift
+Chain.main {
+    // called first
+    // called at main thread queue
+    print("start wait: \(NSDate().description)")
+    return "1"
+    }.wait(seconds: 5).background { result in
+        // called to 5 seconds after the previous block
+        // called at background qos class thread queue
+        print("wait 2: \(NSDate().description)")
+        return result
+    }.wait(seconds: 5).main { result in
+        // called to 5 seconds after the previous block
+        // called at main thread queue
+        print("wait 3: \(NSDate().description)")
+        return result
+    }.run()
+
+
+```
+
 ## Requirements
 
 * Xcode 7.1+
