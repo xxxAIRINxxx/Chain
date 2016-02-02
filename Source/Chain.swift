@@ -9,6 +9,8 @@
 import Foundation
 
 public typealias Closure = (AnyObject? -> AnyObject?)
+public typealias StartClosure = (Void -> AnyObject?)
+public typealias CompletionClosure = (AnyObject? -> Void)
 
 // MARK: - Chain Class
 
@@ -44,7 +46,7 @@ public final class Chain {
 
 extension Chain {
     
-    public func run(queue: Queue? = nil, _ completion: (AnyObject? -> Void)? = nil) {
+    public func run(queue: Queue? = nil, _ completion: CompletionClosure? = nil) {
         let _queue = queue?.queue ?? self.queue.queue
         self.runChain { result in
             dispatch_async(_queue) { completion?(result) }
@@ -57,42 +59,42 @@ extension Chain {
 
 extension Chain {
     
-    public static func main(block: Void -> AnyObject?) -> Chain {
-        return Chain(Queue.Main, nil, { _ in return block() })
+    public static func main(closure: StartClosure) -> Chain {
+        return Chain(Queue.Main, nil, { _ in return closure() })
     }
     
-    public static func background(block: Void -> AnyObject?) -> Chain {
-        return Chain(Queue.Background, nil,  { _ in return block() })
+    public static func background(closure: StartClosure) -> Chain {
+        return Chain(Queue.Background, nil, { _ in return closure() })
     }
     
-    public static func userInteractive(block: Void -> AnyObject?) -> Chain {
-        return Chain(Queue.UserInteractive, nil,  { _ in return block() })
+    public static func userInteractive(closure: StartClosure) -> Chain {
+        return Chain(Queue.UserInteractive, nil, { _ in return closure() })
     }
     
-    public static func userInitiated(block: Void -> AnyObject?) -> Chain {
-        return Chain(Queue.UserInitiated, nil,  { _ in return block() })
+    public static func userInitiated(closure: StartClosure) -> Chain {
+        return Chain(Queue.UserInitiated, nil, { _ in return closure() })
     }
     
-    public static func utility(block: Void -> AnyObject?) -> Chain {
-        return Chain(Queue.Utility, nil,  { _ in return block() })
+    public static func utility(closure: StartClosure) -> Chain {
+        return Chain(Queue.Utility, nil, { _ in return closure() })
     }
     
-    public static func onDefault(block: Void -> AnyObject?) -> Chain {
-        return Chain(Queue.Default, nil,  { _ in return block() })
+    public static func onDefault(closure: StartClosure) -> Chain {
+        return Chain(Queue.Default, nil, { _ in return closure() })
     }
   
-    public static func custom(queue: dispatch_queue_t, _ block: Void -> AnyObject?) -> Chain {
-        return Chain(Queue.Custom(queue: queue), nil,  { _ in return block() })
+    public static func custom(queue: dispatch_queue_t, _ closure: StartClosure) -> Chain {
+        return Chain(Queue.Custom(queue: queue), nil, { _ in return closure() })
     }
     
-    public static func after(queue: Queue = Queue.Background, seconds: Double, _ block:  Void -> AnyObject?) -> Chain {
+    public static func after(queue: Queue = Queue.Background, seconds: Double, _ closure: StartClosure) -> Chain {
         return Chain(queue, nil) { _ in
             Chain.waitBlock(seconds)()
-            return block()
+            return closure()
         }
     }
     
-    public static func wait(queue: Queue = Queue.Background, seconds: Double, _ block:  Void -> AnyObject?) -> Chain {
+    public static func wait(queue: Queue = Queue.Background, seconds: Double, _ closure: StartClosure) -> Chain {
         return Chain(queue, nil) { _ in
             Chain.waitBlock(seconds)()
             return nil
