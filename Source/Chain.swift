@@ -14,27 +14,27 @@ public typealias Closure = (AnyObject? -> AnyObject?)
 
 public final class Chain {
     
-    private let block: Closure
+    private let closure: Closure
     private let queue: Queue
     private let previousChain: Chain?
     
-    private init(_ queue: Queue, _ previousChain: Chain? = nil, _ block: Closure) {
-        self.block = block
+    private init(_ queue: Queue, _ previousChain: Chain? = nil, _ closure: Closure) {
+        self.closure = closure
         self.queue = queue
         self.previousChain = previousChain
     }
     
     private func runChain(next: Closure) -> Closure? {
-        let _block = self.block
+        let _closure = self.closure
         let _queue = self.queue.queue
         
         if let _previousChain = self.previousChain {
             return _previousChain.runChain { result in
-                dispatch_async(_queue) { next(_block(result)) }
+                dispatch_async(_queue) { next(_closure(result)) }
                 return nil
             }
         } else {
-            dispatch_async(_queue) { next(_block(nil)) }
+            dispatch_async(_queue) { next(_closure(nil)) }
             return nil
         }
     }
@@ -114,38 +114,38 @@ extension Chain {
 
 extension Chain {
     
-    public func main(block: Closure) -> Chain {
-        return Chain(Queue.Main, self, block)
+    public func main(closure: Closure) -> Chain {
+        return Chain(Queue.Main, self, closure)
     }
     
-    public func background(block: Closure) -> Chain {
-        return Chain(Queue.Background, self, block)
+    public func background(closure: Closure) -> Chain {
+        return Chain(Queue.Background, self, closure)
     }
     
-    public func userInteractive(block: Closure) -> Chain {
-        return Chain(Queue.UserInteractive, self, block)
+    public func userInteractive(closure: Closure) -> Chain {
+        return Chain(Queue.UserInteractive, self, closure)
     }
     
-    public func userInitiated(block: Closure) -> Chain {
-        return Chain(Queue.UserInitiated, self, block)
+    public func userInitiated(closure: Closure) -> Chain {
+        return Chain(Queue.UserInitiated, self, closure)
     }
     
-    public func utility(block: Closure) -> Chain {
-        return Chain(Queue.Utility, self, block)
+    public func utility(closure: Closure) -> Chain {
+        return Chain(Queue.Utility, self, closure)
     }
     
-    public func onDefault(block: Closure) -> Chain {
-        return Chain(Queue.Default, self, block)
+    public func onDefault(closure: Closure) -> Chain {
+        return Chain(Queue.Default, self, closure)
     }
     
-    public func custom(queue: dispatch_queue_t, _ block: Closure) -> Chain {
-        return Chain(Queue.Custom(queue: queue), self, block)
+    public func custom(queue: dispatch_queue_t, _ closure: Closure) -> Chain {
+        return Chain(Queue.Custom(queue: queue), self, closure)
     }
     
-    public func after(queue: Queue = Queue.Background, seconds: Double, _ block: Closure) -> Chain {
+    public func after(queue: Queue = Queue.Background, seconds: Double, _ closure: Closure) -> Chain {
         return Chain(queue, self) { result in
             Chain.waitBlock(seconds)()
-            return block(result)
+            return closure(result)
         }
     }
     
