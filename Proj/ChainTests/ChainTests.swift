@@ -12,6 +12,11 @@ import XCTest
 
 class ChainTests: XCTestCase {
     
+    // Typical testing time delay. Must be bigger than `timeMargin`
+    static let timeDelay =  1.5
+    // Allowed error for timeDelay
+    static let timeMargin = 0.2
+    
     override func setUp() {
         super.setUp()
     }
@@ -175,6 +180,126 @@ class ChainTests: XCTestCase {
         }
         
         waitForExpectationsWithTimeout(0.5, handler: nil)
+    }
+    
+    func testChainAfter() {
+        let expectation = expectationWithDescription("")
+        
+        let timeDelay = ChainTests.timeDelay
+        let lowerTimeDelay1 = timeDelay - ChainTests.timeMargin
+        let upperTimeDelay1 = timeDelay + ChainTests.timeMargin
+
+        Chain.main {
+            return NSDate()
+            }.after(seconds: timeDelay) { result in
+                let _date = result as! NSDate
+                print(_date)
+                let timePassed = NSDate().timeIntervalSinceDate(_date)
+                print(timePassed)
+                
+                XCTAssert(timePassed >= lowerTimeDelay1, "Should wait \(timePassed) >= \(lowerTimeDelay1) seconds before firing")
+                XCTAssert(timePassed < upperTimeDelay1, "Shouldn't wait \(timePassed), but <\(upperTimeDelay1) seconds before firing")
+                
+                return NSDate()
+            }.after(Queue.Main, seconds: timeDelay) { result in
+                let _date = result as! NSDate
+                print(_date)
+                let timePassed = NSDate().timeIntervalSinceDate(_date)
+                print(timePassed)
+                
+                XCTAssert(timePassed >= lowerTimeDelay1, "Should wait \(timePassed) >= \(lowerTimeDelay1) seconds before firing")
+                XCTAssert(timePassed < upperTimeDelay1, "Shouldn't wait \(timePassed), but <\(upperTimeDelay1) seconds before firing")
+                
+                return NSDate()
+            }.after(Queue.UserInitiated, seconds: timeDelay) { result in
+                let _date = result as! NSDate
+                print(_date)
+                let timePassed = NSDate().timeIntervalSinceDate(_date)
+                print(timePassed)
+                
+                XCTAssert(timePassed >= lowerTimeDelay1, "Should wait \(timePassed) >= \(lowerTimeDelay1) seconds before firing")
+                XCTAssert(timePassed < upperTimeDelay1, "Shouldn't wait \(timePassed), but <\(upperTimeDelay1) seconds before firing")
+                
+                return NSDate()
+            }.after(Queue.Default, seconds: timeDelay) { result in
+                let _date = result as! NSDate
+                print(_date)
+                let timePassed = NSDate().timeIntervalSinceDate(_date)
+                print(timePassed)
+                
+                XCTAssert(timePassed >= lowerTimeDelay1, "Should wait \(timePassed) >= \(lowerTimeDelay1) seconds before firing")
+                XCTAssert(timePassed < upperTimeDelay1, "Shouldn't wait \(timePassed), but <\(upperTimeDelay1) seconds before firing")
+                
+                return NSDate()
+            }.run(.Main) { result in
+                expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10.0, handler: nil)
+    }
+    
+    func testChainWait() {
+        let expectation = expectationWithDescription("")
+        
+        let timeDelay = ChainTests.timeDelay
+        let lowerTimeDelay1 = timeDelay - ChainTests.timeMargin
+        let upperTimeDelay1 = timeDelay + ChainTests.timeMargin
+        
+        Chain.main {
+            return NSDate()
+            }.wait(seconds: timeDelay).main { result in
+                let _date = result as! NSDate
+                print(_date)
+                let timePassed = NSDate().timeIntervalSinceDate(_date)
+                print(timePassed)
+                
+                XCTAssert(timePassed >= lowerTimeDelay1, "Should wait \(timePassed) >= \(lowerTimeDelay1) seconds before firing")
+                XCTAssert(timePassed < upperTimeDelay1, "Shouldn't wait \(timePassed), but <\(upperTimeDelay1) seconds before firing")
+                
+                return NSDate()
+            }.wait(seconds: timeDelay).background { result in
+                let _date = result as! NSDate
+                print(_date)
+                let timePassed = NSDate().timeIntervalSinceDate(_date)
+                print(timePassed)
+                
+                XCTAssert(timePassed >= lowerTimeDelay1, "Should wait \(timePassed) >= \(lowerTimeDelay1) seconds before firing")
+                XCTAssert(timePassed < upperTimeDelay1, "Shouldn't wait \(timePassed), but <\(upperTimeDelay1) seconds before firing")
+                
+                return NSDate()
+            }.wait(seconds: timeDelay).userInitiated { result in
+                let _date = result as! NSDate
+                print(_date)
+                let timePassed = NSDate().timeIntervalSinceDate(_date)
+                print(timePassed)
+                
+                XCTAssert(timePassed >= lowerTimeDelay1, "Should wait \(timePassed) >= \(lowerTimeDelay1) seconds before firing")
+                XCTAssert(timePassed < upperTimeDelay1, "Shouldn't wait \(timePassed), but <\(upperTimeDelay1) seconds before firing")
+                
+                return NSDate()
+            }.wait(seconds: timeDelay).onDefault { result in
+                let _date = result as! NSDate
+                print(_date)
+                let timePassed = NSDate().timeIntervalSinceDate(_date)
+                print(timePassed)
+                
+                XCTAssert(timePassed >= lowerTimeDelay1, "Should wait \(timePassed) >= \(lowerTimeDelay1) seconds before firing")
+                XCTAssert(timePassed < upperTimeDelay1, "Shouldn't wait \(timePassed), but <\(upperTimeDelay1) seconds before firing")
+                
+                return NSDate()
+            }.wait(seconds: timeDelay).run(.Main) { result in
+                let _date = result as! NSDate
+                print(_date)
+                let timePassed = NSDate().timeIntervalSinceDate(_date)
+                print(timePassed)
+                
+                XCTAssert(timePassed >= lowerTimeDelay1, "Should wait \(timePassed) >= \(lowerTimeDelay1) seconds before firing")
+                XCTAssert(timePassed < upperTimeDelay1, "Shouldn't wait \(timePassed), but <\(upperTimeDelay1) seconds before firing")
+
+                expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10.0, handler: nil)
     }
 }
 
