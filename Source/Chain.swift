@@ -38,10 +38,6 @@ public final class Chain {
             return nil
         }
     }
-    
-    private func chain(chainingBlock: Closure) -> Chain {
-        return Chain(Queue.Default, self, chainingBlock)
-    }
 }
 
 // MARK: - Run Chain
