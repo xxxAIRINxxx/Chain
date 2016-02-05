@@ -46,7 +46,7 @@ public final class Chain {
 
 extension Chain {
     
-    public func run(queue: Queue? = nil, _ completion: CompletionClosure? = nil) {
+    public final func run(queue: Queue? = nil, _ completion: CompletionClosure? = nil) {
         let _queue = queue?.queue ?? self.queue.queue
         self.runChain { result in
             dispatch_async(_queue) { completion?(result) }
@@ -116,42 +116,42 @@ extension Chain {
 
 extension Chain {
     
-    public func main(closure: Closure) -> Chain {
+    public final func main(closure: Closure) -> Chain {
         return Chain(Queue.Main, self, closure)
     }
     
-    public func background(closure: Closure) -> Chain {
+    public final func background(closure: Closure) -> Chain {
         return Chain(Queue.Background, self, closure)
     }
     
-    public func userInteractive(closure: Closure) -> Chain {
+    public final func userInteractive(closure: Closure) -> Chain {
         return Chain(Queue.UserInteractive, self, closure)
     }
     
-    public func userInitiated(closure: Closure) -> Chain {
+    public final func userInitiated(closure: Closure) -> Chain {
         return Chain(Queue.UserInitiated, self, closure)
     }
     
-    public func utility(closure: Closure) -> Chain {
+    public final func utility(closure: Closure) -> Chain {
         return Chain(Queue.Utility, self, closure)
     }
     
-    public func onDefault(closure: Closure) -> Chain {
+    public final func onDefault(closure: Closure) -> Chain {
         return Chain(Queue.Default, self, closure)
     }
     
-    public func custom(queue: dispatch_queue_t, _ closure: Closure) -> Chain {
+    public final func custom(queue: dispatch_queue_t, _ closure: Closure) -> Chain {
         return Chain(Queue.Custom(queue: queue), self, closure)
     }
     
-    public func after(queue: Queue = Queue.Background, seconds: Double, _ closure: Closure) -> Chain {
+    public final func after(queue: Queue = Queue.Background, seconds: Double, _ closure: Closure) -> Chain {
         return Chain(queue, self) { result in
             Chain.waitBlock(seconds)()
             return closure(result)
         }
     }
     
-    public func wait(queue: Queue = Queue.Background, seconds: Double) -> Chain {
+    public final func wait(queue: Queue = Queue.Background, seconds: Double) -> Chain {
         return Chain(queue, self) { result in
             Chain.waitBlock(seconds)()
             return result
