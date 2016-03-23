@@ -10,7 +10,6 @@
 		91B9EB271C59AB9700426490 /* Chain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9EB1C1C59AB9700426490 /* Chain.framework */; };
 		91B9EB2C1C59AB9700426490 /* ChainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B9EB2B1C59AB9700426490 /* ChainTests.swift */; };
 		91B9EB3A1C59AC1900426490 /* Chain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B9EB371C59AC1900426490 /* Chain.swift */; };
-		91B9EB3B1C59AC1900426490 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91B9EB381C59AC1900426490 /* Info.plist */; };
 		91B9EB3E1C59AE9600426490 /* Chain.h in Headers */ = {isa = PBXBuildFile; fileRef = 91B9EB361C59AC1900426490 /* Chain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		91B9EB8D1C59B66B00426490 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B9EB8C1C59B66B00426490 /* Queue.swift */; };
 		91B9EB8F1C59B73E00426490 /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B9EB8E1C59B73E00426490 /* QueueTests.swift */; };
@@ -154,7 +153,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = xxxAIRINxxx;
 				TargetAttributes = {
 					91B9EB1B1C59AB9700426490 = {
@@ -188,7 +187,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91B9EB3B1C59AC1900426490 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +266,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -310,7 +308,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -330,7 +328,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/../Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xxxAIRINxxx.Chain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -349,7 +347,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/../Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xxxAIRINxxx.Chain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
