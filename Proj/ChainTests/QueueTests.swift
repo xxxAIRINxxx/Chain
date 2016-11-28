@@ -21,13 +21,13 @@ class QueueTests: XCTestCase {
     }
     
     func testMainQueue() {
-        XCTAssertTrue(Queue.Main.queue === dispatch_get_main_queue(), "on main queue")
+        XCTAssertTrue(Queue.main.queue === dispatch_get_main_queue(), "on main queue")
     }
     
     func testBackgroundQueue() {
         let expectation = expectationWithDescription("")
         
-        dispatch_async(Queue.Background.queue) {
+        dispatch_async(Queue.background.queue) {
             XCTAssertEqual(qos_class_self(), QOS_CLASS_BACKGROUND, "on background queue")
             expectation.fulfill()
         }

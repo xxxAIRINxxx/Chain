@@ -8,6 +8,9 @@
       location = "group:../SwChain.podspec">
    </FileRef>
    <FileRef
+      location = "group:../LICENSE">
+   </FileRef>
+   <FileRef
       location = "group:Chain.xcodeproj">
    </FileRef>
    <FileRef

@@ -11,29 +11,29 @@ import Foundation
 // MARK: - GCD Queue
 
 public enum Queue {
-    case Main
-    case Background
-    case UserInteractive
-    case UserInitiated
-    case Utility
-    case Default
-    case Custom(queue: dispatch_queue_t)
+    case main
+    case background
+    case userInteractive
+    case userInitiated
+    case utility
+    case `default`
+    case custom(queue: DispatchQueue)
     
-    public var queue : dispatch_queue_t {
+    public var queue : DispatchQueue {
         switch self {
-        case .Main:
-            return dispatch_get_main_queue()
-        case .Background:
-            return dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
-        case .UserInteractive:
-            return dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
-        case .UserInitiated:
-            return dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
-        case .Utility:
-            return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
-        case .Default:
-            return dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)
-        case .Custom(let queue):
+        case .main:
+            return DispatchQueue.main
+        case .background:
+            return DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
+        case .userInteractive:
+            return DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive)
+        case .userInitiated:
+            return DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated)
+        case .utility:
+            return DispatchQueue.global(qos: DispatchQoS.QoSClass.utility)
+        case .default:
+            return DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
+        case .custom(let queue):
             return queue
         }
     }

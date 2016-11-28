@@ -41,7 +41,7 @@ final class ViewController: UIViewController {
                 // called at default qos class thread queue
                 print(result)  // Optional(4)
                 return "5"
-            }.run(.Main) { result in
+            }.run(.main) { result in
                 // called last
                 // called at main thread queue
                 print(result)  // Optional(5)
@@ -50,7 +50,7 @@ final class ViewController: UIViewController {
         
         // Custom Queue
         
-        let customQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+        let customQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
         
         Chain.custom(customQueue) {
             // called first
@@ -75,30 +75,30 @@ final class ViewController: UIViewController {
         Chain.main {
             // called first
             // called at main thread queue
-            print("start after: \(NSDate().description)")
+            print("start after: \(Date().description)")
             return "1"
             }.after(seconds: 5) { result in
                 // called second
                 // called to 5 seconds after the previous block
                 // called at background qos class thread queue
                 print(result)  // Optional(1)
-                return "after 2: \(NSDate().description)"
+                return "after 2: \(Date().description)"
             }.userInteractive { result in
                 // called third
                 // called at userInteractive qos class thread queue
                 print(result)  // Optional(2)
-                return "after 3: \(NSDate().description)"
-            }.after(Queue.Utility, seconds: 5) { result in
+                return "after 3: \(Date().description)"
+            }.after(Queue.utility, seconds: 5) { result in
                 // called fourth
                 // called to 5 seconds after the previous block
                 // called at utility qos class thread queue
                 print(result)  // Optional(3)
-                return "after 4: \(NSDate().description)"
-            }.run(.Main) { result in
+                return "after 4: \(Date().description)"
+            }.run(.main) { result in
                 // called last
                 // called at main thread queue
                 print(result)  // Optional(4)
-                print("after completion: \(NSDate().description)")
+                print("after completion: \(Date().description)")
         }
         
         // Wait
@@ -106,17 +106,17 @@ final class ViewController: UIViewController {
         Chain.main {
             // called first
             // called at main thread queue
-            print("start wait: \(NSDate().description)")
+            print("start wait: \(Date().description)")
             return "1"
             }.wait(seconds: 5).background { result in
                 // called to 5 seconds after the previous block
                 // called at background qos class thread queue
-                print("wait 2: \(NSDate().description)")
+                print("wait 2: \(Date().description)")
                 return result
             }.wait(seconds: 5).main { result in
                 // called to 5 seconds after the previous block
                 // called at main thread queue
-                print("wait 3: \(NSDate().description)")
+                print("wait 3: \(Date().description)")
                 return result
             }.run()
         
