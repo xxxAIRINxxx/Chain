@@ -1,8 +1,8 @@
 # Chain
 
-[![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![Swift 5.0](https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![Platforms iOS](https://img.shields.io/badge/Platforms-iOS-lightgray.svg?style=flat)](https://developer.apple.com/swift/)
-[![Xcode 8.0](https://img.shields.io/badge/Xcode-8.0-blue.svg?style=flat)](https://developer.apple.com/swift/)
+[![Xcode 10.2](https://img.shields.io/badge/Xcode-10.2-blue.svg?style=flat)](https://developer.apple.com/swift/)
 
 Method chaining of queued closure (blocks) on GCD (Grand Central Dispatch).
 
@@ -135,9 +135,13 @@ Chain.main {
 
 ## Requirements
 
-* iOS 8.0+
-* Swift 3.0+
-* Xcode 8.0+
+* Xcode 10.2+
+
+|            | OS                         | Swift         |
+|------------|------------------|--------------|
+| **v1.2.x** | iOS 8+ | 3.0      |
+| **v1.3.x** | iOS 10+ | 5.0      |
+
 
 ## Installation
 
